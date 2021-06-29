@@ -40,6 +40,15 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UCP-Aq-VzO">
+                                <rect key="frame" x="105" y="402.5" width="204" height="101"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="101" id="566-Ly-mdC"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="43"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -48,12 +57,17 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Xa2-mg-yVe" secondAttribute="trailing" constant="20" id="D4c-HJ-2MG"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="yo8-rn-hO0" secondAttribute="trailing" constant="20" id="VZh-CU-DpC"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Xa2-mg-yVe" secondAttribute="bottom" constant="36" id="X5Q-AB-fEG"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="UCP-Aq-VzO" secondAttribute="trailing" constant="105" id="YoE-sJ-fwb"/>
+                            <constraint firstItem="UCP-Aq-VzO" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="105" id="bs1-4x-AVf"/>
+                            <constraint firstItem="UCP-Aq-VzO" firstAttribute="top" secondItem="yo8-rn-hO0" secondAttribute="bottom" constant="168.5" id="m75-Vl-zUz"/>
                             <constraint firstItem="yo8-rn-hO0" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="101" id="qcZ-u6-bfH"/>
                             <constraint firstItem="Xa2-mg-yVe" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="uWr-sE-361"/>
+                            <constraint firstItem="UCP-Aq-VzO" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="uyn-d6-yPF"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="nameLabel" destination="yo8-rn-hO0" id="eeb-Tn-ljd"/>
+                        <outlet property="randomNumberLabel" destination="UCP-Aq-VzO" id="JFO-rH-GGb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
