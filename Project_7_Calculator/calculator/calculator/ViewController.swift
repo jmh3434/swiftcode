@@ -12,15 +12,7 @@ class ViewController: UIViewController {
     
     var lastOperand = Double()
     var currentOperand = Double()
-    
-    enum Operator:Int {
-        case add = 1
-        case subtract = 2
-        case multiply = 3
-        case divide = 4
-        case percent = 5
-    }
-    
+
     var operation = Operator(rawValue: 0)
 
     override func viewDidLoad() {
@@ -52,7 +44,6 @@ class ViewController: UIViewController {
     
     }
     
-    
     @IBAction func applyOperator(_ sender: UIButton) {
         lastOperand = currentOperand
         operation = Operator(rawValue: sender.tag)
@@ -83,19 +74,21 @@ class ViewController: UIViewController {
         default:
             print("error")
         }
-      
-        print(result)
         if floor(result) == result{
             currentValueLabel.text? = "\(Int(result))"
         }else {
             currentValueLabel.text? = "\(result)"
         }
-        
-        
         currentOperand = result
         lastOperand = 0.0
     }
-    
-  
+}
+
+enum Operator:Int {
+    case add = 1
+    case subtract = 2
+    case multiply = 3
+    case divide = 4
+    case percent = 5
 }
 
