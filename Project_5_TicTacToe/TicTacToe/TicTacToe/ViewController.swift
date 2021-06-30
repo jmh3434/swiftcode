@@ -42,8 +42,6 @@ class ViewController: UIViewController {
         }
     }
     @IBAction func buttonPressed(_ sender: UIButton) {
-        
-    
         if firstPlayerTurn {
             winArr[sender.tag] = 1
             sender.backgroundColor = .systemTeal
@@ -79,7 +77,6 @@ class ViewController: UIViewController {
        ]
         
         for winningTrio in winningPossibilities {
-        
             if winningTrio.allSatisfy({$0==1}) {
                 return 1
             }else if winningTrio.allSatisfy({$0==2}) {
