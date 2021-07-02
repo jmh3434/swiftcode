@@ -7,8 +7,11 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController,BeastCellDelegate {
+    
+    
     @IBOutlet weak var taskTextField: UITextField!
+    @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     
     // Create this array at the top of your class as a property
@@ -20,6 +23,9 @@ class ViewController: UIViewController {
         
         tableView.dataSource = self
         tableView.delegate = self
+    }
+    func showTaskDescription(description: String) {
+        descriptionLabel.text = description
     }
 
     @IBAction func beastButtonPressed(_ sender: UIButton) {
@@ -38,9 +44,11 @@ extension ViewController:UITableViewDataSource,UITableViewDelegate {
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "MyCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "MyCell", for: indexPath) as! BeastTableViewCell
         
         cell.textLabel?.text = tasks[indexPath.row]
+        
+        cell.delegate = self
         
         return cell
     }
