@@ -10,4 +10,6 @@ import UIKit
 
 protocol AddDogDelegate {
     func addDogPressed(controller:UIViewController,dog:Dog)
+    func saveDogPressed(controller:UIViewController,dog:Dog, at IndexPath:NSIndexPath?)
+    func deleteDogPressed(controller:UIViewController,dog:Dog, at indexPath:NSIndexPath?)
 }

@@ -9,6 +9,9 @@ import UIKit
 
 class DogsCollectionViewController: UICollectionViewController,AddDogDelegate {
     
+    
+    
+    
     var dogs = [Dog]()
 
     override func viewDidLoad() {
@@ -45,21 +48,50 @@ class DogsCollectionViewController: UICollectionViewController,AddDogDelegate {
     }
     
     @IBAction func addPressed(_ sender: UIBarButtonItem) {
-        performSegue(withIdentifier: "add", sender: nil)
+        performSegue(withIdentifier: "add", sender: sender)
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let nav = segue.destination as! UINavigationController
         let controller = nav.topViewController as! AddDogViewController
         controller.delegate = self
+        
+        if let _ = sender as? UIBarButtonItem {
+            
+        }
+        
+        if let indexPath = sender as? NSIndexPath {
+            let dog = dogs[indexPath.item]
+            controller.currentDog = dog
+            controller.indexPath = indexPath
+        }
+        
+            
     }
     func addDogPressed(controller: UIViewController, dog: Dog) {
-        
         self.dismiss(animated: true, completion: nil)
-        
         dogs.append(dog)
         collectionView.reloadData()
+    }
+    func saveDogPressed(controller: UIViewController, dog: Dog, at indexPath: NSIndexPath?) {
+        dogs[indexPath!.item].name = dog.name
+        dogs[indexPath!.item].color = dog.color
+        dogs[indexPath!.item].favoriteTreat = dog.favoriteTreat
+        dogs[indexPath!.item].image = dog.image
         
-        print("here's that dog",dog.color,dog.favoriteTreat)
+        self.dismiss(animated: true, completion: nil)
+        collectionView.reloadData()
+    }
+    
+    func deleteDogPressed(controller: UIViewController, dog: Dog, at indexPath: NSIndexPath?) {
+        dogs.remove(at: indexPath!.item)
+        
+        self.dismiss(animated: true, completion: nil)
+        collectionView.reloadData()
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        performSegue(withIdentifier: "add", sender: indexPath)
     }
     
 

@@ -9,11 +9,34 @@ import UIKit
 
 class AddDogViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     @IBOutlet var dogProperty: [UITextField]!
+    @IBOutlet weak var addDogButton: UIButton!
+    @IBOutlet weak var addPhotoButton: UIButton!
     
     var delegate:AddDogDelegate?
-    var newDog:Dog?
+    var currentDog:Dog?
+    var indexPath:NSIndexPath?
     
     override func viewDidLoad() {
+        
+        hideKeyboardWhenTappedAround()
+        
+        if let dog = currentDog {
+            dogProperty[0].text = dog.name
+            dogProperty[1].text = dog.color
+            dogProperty[2].text = dog.favoriteTreat
+            
+            addDogButton.setTitle("Delete", for: .normal)
+            addDogButton.setTitleColor(.red, for: .normal)
+            
+            let path = getDocumentsDirectory().appendingPathComponent(dog.image)
+            addPhotoButton.setBackgroundImage(UIImage(contentsOfFile: path.path), for: .normal)
+            
+            navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveDog))
+
+        }else{
+            currentDog = Dog()
+        }
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel))
         super.viewDidLoad()
     }
     @IBAction func addPhoto(_ sender: UIButton) {
@@ -21,12 +44,40 @@ class AddDogViewController: UIViewController, UIImagePickerControllerDelegate, U
            picker.allowsEditing = true
            picker.delegate = self
            present(picker, animated: true)
-        
     }
     @IBAction func addDog(_ sender: UIButton) {
-        if let dog = newDog {
-            delegate?.addDogPressed(controller: self, dog: dog)
+        if addDogButton.titleLabel?.text == "Add Dog"{
+            // add dog
+            
+            currentDog?.name = dogProperty[0].text!
+            currentDog?.color = dogProperty[1].text!
+            currentDog?.favoriteTreat = dogProperty[2].text!
+            
+            if let dog = currentDog {
+                delegate?.addDogPressed(controller: self, dog: dog)
+            }
+        }else{
+            // delete dog
+            if let dog = currentDog {
+                delegate?.deleteDogPressed(controller: self, dog: dog, at: indexPath)
+            }
         }
+    }
+    @objc func saveDog() {
+        // save dog
+        currentDog?.name = dogProperty[0].text!
+        currentDog?.color = dogProperty[1].text!
+        currentDog?.favoriteTreat = dogProperty[2].text!
+        
+        if let dog = currentDog {
+            delegate?.saveDogPressed(controller: self, dog: dog, at: indexPath)
+        }
+    }
+    @objc func cancel() {
+        // cencel
+        
+        self.dismiss(animated: true, completion: nil)
+        
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
@@ -39,7 +90,9 @@ class AddDogViewController: UIViewController, UIImagePickerControllerDelegate, U
             try? jpegData.write(to: imagePath)
         }
         
-        newDog = Dog(name: "james", color: "color", favoriteTreat: "treat", image: imageName)
+        addPhotoButton.setBackgroundImage(UIImage(contentsOfFile: imagePath.path), for: .normal)
+        
+        currentDog?.image = imageName
 
         dismiss(animated: true)
     }
@@ -48,5 +101,20 @@ class AddDogViewController: UIViewController, UIImagePickerControllerDelegate, U
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         return paths[0]
     }
+    
+    
+    
 
+}
+
+extension UIViewController {
+    func hideKeyboardWhenTappedAround() {
+        let tapGesture = UITapGestureRecognizer(target: self,
+                         action: #selector(hideKeyboard))
+        view.addGestureRecognizer(tapGesture)
+    }
+
+    @objc func hideKeyboard() {
+        view.endEditing(true)
+    }
 }
