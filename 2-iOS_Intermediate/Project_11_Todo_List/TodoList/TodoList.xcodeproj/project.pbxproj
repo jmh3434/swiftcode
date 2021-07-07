@@ -88,6 +88,7 @@
 		6A278C57269556D5004B80E9 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				6A278C5C26956337004B80E9 /* TodoList.xcdatamodeld */,
 				6A278C5226954E39004B80E9 /* AddItemDelegate.swift */,
 				6A278C542695568E004B80E9 /* ToDoItem.swift */,
 				6A278C4E2694DC30004B80E9 /* TodoTableViewCell.swift */,
@@ -107,7 +108,6 @@
 		6A278C5B2695570C004B80E9 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				6A278C5C26956337004B80E9 /* TodoList.xcdatamodeld */,
 				6A278C382694D931004B80E9 /* AppDelegate.swift */,
 				6A278C3A2694D931004B80E9 /* SceneDelegate.swift */,
 			);
