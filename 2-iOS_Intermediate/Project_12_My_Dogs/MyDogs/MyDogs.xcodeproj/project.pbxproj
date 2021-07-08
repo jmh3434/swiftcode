@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6A2775272696E8B3003CA197 /* MyDog.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6A2775252696E8B3003CA197 /* MyDog.xcdatamodeld */; };
 		6A81686A26960C9A00E103E7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A81686926960C9A00E103E7 /* AppDelegate.swift */; };
 		6A81686C26960C9A00E103E7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A81686B26960C9A00E103E7 /* SceneDelegate.swift */; };
 		6A81687126960C9A00E103E7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6A81686F26960C9A00E103E7 /* Main.storyboard */; };
@@ -15,12 +16,11 @@
 		6A81687E269630F000E103E7 /* DogsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A81687D269630F000E103E7 /* DogsCollectionViewController.swift */; };
 		6A816884269631A700E103E7 /* DogCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A816883269631A700E103E7 /* DogCollectionViewCell.swift */; };
 		6A8168862696322F00E103E7 /* AddDogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A8168852696322F00E103E7 /* AddDogViewController.swift */; };
-		6A816888269633A400E103E7 /* saint.png in Resources */ = {isa = PBXBuildFile; fileRef = 6A816887269633A400E103E7 /* saint.png */; };
-		6A81688A2696353D00E103E7 /* Dog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A8168892696353D00E103E7 /* Dog.swift */; };
 		6A81688C2696376400E103E7 /* AddDogDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A81688B2696376400E103E7 /* AddDogDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6A2775262696E8B3003CA197 /* MyDog.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MyDog.xcdatamodel; sourceTree = "<group>"; };
 		6A81686626960C9A00E103E7 /* MyDogs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyDogs.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A81686926960C9A00E103E7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6A81686B26960C9A00E103E7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -31,8 +31,6 @@
 		6A81687D269630F000E103E7 /* DogsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogsCollectionViewController.swift; sourceTree = "<group>"; };
 		6A816883269631A700E103E7 /* DogCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogCollectionViewCell.swift; sourceTree = "<group>"; };
 		6A8168852696322F00E103E7 /* AddDogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AddDogViewController.swift; path = MyDogs/Controller/AddDogViewController.swift; sourceTree = SOURCE_ROOT; };
-		6A816887269633A400E103E7 /* saint.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = saint.png; sourceTree = "<group>"; };
-		6A8168892696353D00E103E7 /* Dog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dog.swift; sourceTree = "<group>"; };
 		6A81688B2696376400E103E7 /* AddDogDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDogDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -79,9 +77,9 @@
 		6A81687F269630F900E103E7 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				6A2775252696E8B3003CA197 /* MyDog.xcdatamodeld */,
 				6A81688B2696376400E103E7 /* AddDogDelegate.swift */,
 				6A816883269631A700E103E7 /* DogCollectionViewCell.swift */,
-				6A8168892696353D00E103E7 /* Dog.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -109,7 +107,6 @@
 				6A81686926960C9A00E103E7 /* AppDelegate.swift */,
 				6A81686B26960C9A00E103E7 /* SceneDelegate.swift */,
 				6A81687426960C9E00E103E7 /* LaunchScreen.storyboard */,
-				6A816887269633A400E103E7 /* saint.png */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -174,7 +171,6 @@
 				6A81687626960C9E00E103E7 /* LaunchScreen.storyboard in Resources */,
 				6A81687326960C9E00E103E7 /* Assets.xcassets in Resources */,
 				6A81687126960C9A00E103E7 /* Main.storyboard in Resources */,
-				6A816888269633A400E103E7 /* saint.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -187,8 +183,8 @@
 			files = (
 				6A81687E269630F000E103E7 /* DogsCollectionViewController.swift in Sources */,
 				6A81688C2696376400E103E7 /* AddDogDelegate.swift in Sources */,
+				6A2775272696E8B3003CA197 /* MyDog.xcdatamodeld in Sources */,
 				6A81686A26960C9A00E103E7 /* AppDelegate.swift in Sources */,
-				6A81688A2696353D00E103E7 /* Dog.swift in Sources */,
 				6A81686C26960C9A00E103E7 /* SceneDelegate.swift in Sources */,
 				6A8168862696322F00E103E7 /* AddDogViewController.swift in Sources */,
 				6A816884269631A700E103E7 /* DogCollectionViewCell.swift in Sources */,
@@ -393,6 +389,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		6A2775252696E8B3003CA197 /* MyDog.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				6A2775262696E8B3003CA197 /* MyDog.xcdatamodel */,
+			);
+			currentVersion = 6A2775262696E8B3003CA197 /* MyDog.xcdatamodel */;
+			path = MyDog.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 6A81685E26960C9A00E103E7 /* Project object */;
 }

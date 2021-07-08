@@ -6,22 +6,35 @@
 //
 
 import UIKit
+import CoreData
 
 class DogsCollectionViewController: UICollectionViewController,AddDogDelegate {
     
+    let managedObjectContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
+    let saveContext = (UIApplication.shared.delegate as! AppDelegate).saveContext
     
+    var dogs = [DogItem]()
     
-    var dogs = [Dog]()
-
     override func viewDidLoad() {
         super.viewDidLoad()
+        fetchAllItems()
+    }
+    func fetchAllItems(){
+        let request:NSFetchRequest<DogItem> = DogItem.fetchRequest()
+        do {
+            let result = try managedObjectContext.fetch(request)
+            // Here we can store the fetched data in an array
+            dogs = result
+        } catch {
+            print(error)
+        }
         
     }
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return dogs.count
     }
-
+    
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? DogCollectionViewCell else {
             // we failed to get a PersonCell – bail out!
@@ -29,17 +42,20 @@ class DogsCollectionViewController: UICollectionViewController,AddDogDelegate {
         }
         
         let dog = dogs[indexPath.item]
-
-            cell.name.text = dog.name
-
-            let path = getDocumentsDirectory().appendingPathComponent(dog.image)
+        
+        cell.name.text = dog.name
+        
+        if let image = dog.image {
+            let path = getDocumentsDirectory().appendingPathComponent(image)
             cell.imageView.image = UIImage(contentsOfFile: path.path)
-
-            cell.imageView.layer.borderColor = UIColor(white: 0, alpha: 0.3).cgColor
-            cell.imageView.layer.borderWidth = 2
-            cell.imageView.layer.cornerRadius = 3
-            cell.layer.cornerRadius = 7
-
+        }
+        
+        
+        cell.imageView.layer.borderColor = UIColor(white: 0, alpha: 0.3).cgColor
+        cell.imageView.layer.borderWidth = 2
+        cell.imageView.layer.cornerRadius = 3
+        cell.layer.cornerRadius = 7
+        
         return cell
     }
     func getDocumentsDirectory() -> URL {
@@ -65,14 +81,14 @@ class DogsCollectionViewController: UICollectionViewController,AddDogDelegate {
             controller.indexPath = indexPath
         }
         
-            
+        
     }
-    func addDogPressed(controller: UIViewController, dog: Dog) {
+    func addDogPressed(controller: UIViewController, dog: DogItem) {
         self.dismiss(animated: true, completion: nil)
         dogs.append(dog)
         collectionView.reloadData()
     }
-    func saveDogPressed(controller: UIViewController, dog: Dog, at indexPath: NSIndexPath?) {
+    func saveDogPressed(controller: UIViewController, dog: DogItem, at indexPath: NSIndexPath?) {
         dogs[indexPath!.item].name = dog.name
         dogs[indexPath!.item].color = dog.color
         dogs[indexPath!.item].favoriteTreat = dog.favoriteTreat
@@ -82,9 +98,10 @@ class DogsCollectionViewController: UICollectionViewController,AddDogDelegate {
         collectionView.reloadData()
     }
     
-    func deleteDogPressed(controller: UIViewController, dog: Dog, at indexPath: NSIndexPath?) {
+    func deleteDogPressed(controller: UIViewController, dog: DogItem, at indexPath: NSIndexPath?) {
+        let item = dogs[indexPath!.item]
         dogs.remove(at: indexPath!.item)
-        
+        managedObjectContext.delete(item)
         self.dismiss(animated: true, completion: nil)
         collectionView.reloadData()
     }
@@ -94,5 +111,5 @@ class DogsCollectionViewController: UICollectionViewController,AddDogDelegate {
         performSegue(withIdentifier: "add", sender: indexPath)
     }
     
-
+    
 }

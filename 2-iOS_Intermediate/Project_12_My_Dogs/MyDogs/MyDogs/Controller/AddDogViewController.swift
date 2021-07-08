@@ -6,35 +6,51 @@
 //
 
 import UIKit
+import CoreData
 
 class AddDogViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
     @IBOutlet var dogProperty: [UITextField]!
     @IBOutlet weak var addDogButton: UIButton!
     @IBOutlet weak var addPhotoButton: UIButton!
     
     var delegate:AddDogDelegate?
-    var currentDog:Dog?
+    var currentDog:DogItem?
     var indexPath:NSIndexPath?
+    
+    let managedObjectContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+
     
     override func viewDidLoad() {
         
         hideKeyboardWhenTappedAround()
         
         if let dog = currentDog {
+            
+            // get dog previously created
+            
+            self.title = "Edit Dog"
+            
             dogProperty[0].text = dog.name
             dogProperty[1].text = dog.color
             dogProperty[2].text = dog.favoriteTreat
             
             addDogButton.setTitle("Delete", for: .normal)
+            addPhotoButton.setTitle("Update Photo", for: .normal)
             addDogButton.setTitleColor(.red, for: .normal)
             
-            let path = getDocumentsDirectory().appendingPathComponent(dog.image)
-            addPhotoButton.setBackgroundImage(UIImage(contentsOfFile: path.path), for: .normal)
+            if let image = dog.image {
+                let path = getDocumentsDirectory().appendingPathComponent(image)
+                addPhotoButton.setBackgroundImage(UIImage(contentsOfFile: path.path), for: .normal)
+            }
             
             navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveDog))
 
         }else{
-            currentDog = Dog()
+            
+            // create a new dog
+            
+            currentDog = DogItem(context: managedObjectContext)
         }
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel))
         super.viewDidLoad()
@@ -48,7 +64,6 @@ class AddDogViewController: UIViewController, UIImagePickerControllerDelegate, U
     @IBAction func addDog(_ sender: UIButton) {
         if addDogButton.titleLabel?.text == "Add Dog"{
             // add dog
-            
             currentDog?.name = dogProperty[0].text!
             currentDog?.color = dogProperty[1].text!
             currentDog?.favoriteTreat = dogProperty[2].text!
@@ -75,7 +90,6 @@ class AddDogViewController: UIViewController, UIImagePickerControllerDelegate, U
     }
     @objc func cancel() {
         // cencel
-        
         self.dismiss(animated: true, completion: nil)
         
     }
@@ -93,6 +107,8 @@ class AddDogViewController: UIViewController, UIImagePickerControllerDelegate, U
         addPhotoButton.setBackgroundImage(UIImage(contentsOfFile: imagePath.path), for: .normal)
         
         currentDog?.image = imageName
+        
+        addPhotoButton.setTitle("", for: .normal)
 
         dismiss(animated: true)
     }
@@ -102,9 +118,6 @@ class AddDogViewController: UIViewController, UIImagePickerControllerDelegate, U
         return paths[0]
     }
     
-    
-    
-
 }
 
 extension UIViewController {
