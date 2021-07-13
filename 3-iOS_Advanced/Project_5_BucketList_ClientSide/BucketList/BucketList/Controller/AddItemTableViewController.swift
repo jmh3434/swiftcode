@@ -10,8 +10,8 @@ import UIKit
 class AddItemTableViewController: UITableViewController {
     
     var delegate:AddItemTableViewControllerDelegate?
-    var item:String?
     
+    var item:String?
     var indexPath:NSIndexPath?
     
     @IBOutlet weak var itemTextField: UITextField!

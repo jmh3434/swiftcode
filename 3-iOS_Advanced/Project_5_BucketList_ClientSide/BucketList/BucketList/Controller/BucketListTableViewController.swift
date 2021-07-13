@@ -10,47 +10,46 @@ import CoreData
 
 class BucketListTableViewController: UITableViewController,AddItemTableViewControllerDelegate {
     
-   
-    var newItems = [NSDictionary]()
-
+    var tasks = [NSDictionary]()
+    
     override func viewDidLoad() {
         
-        
         getTasks()
-        
         super.viewDidLoad()
     }
     
     func getTasks(){
-        newItems.removeAll()
         TaskModel.getAllTasks() { [self]
-                data, response, error in
-                do {
-                    if let tasks = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers) as? NSArray {
-                        for item in tasks {
-
-                            newItems.append(item as! NSDictionary)
+            data, response, error in
+            do {
+                if data != nil {
+                    if let newTasks = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers) as? NSArray {
+                        var tasksDict = [NSDictionary]()
+                        for item in newTasks {
+                            tasksDict.append(item as! NSDictionary)
                         }
+                        self.tasks = tasksDict
                     }
                     DispatchQueue.main.async {
                         self.tableView.reloadData()
                     }
-                } catch {
-                    print(error)
                 }
+            } catch {
+                print(error)
             }
+        }
     }
     
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return newItems.count
+        return tasks.count
     }
     
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         
-        let objective = newItems[indexPath.row]["objective"]
+        let objective = tasks[indexPath.row]["objective"]
         cell.textLabel?.text = objective as? String
         
         return cell
@@ -61,7 +60,6 @@ class BucketListTableViewController: UITableViewController,AddItemTableViewContr
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
         
         if let _ = sender as? UIBarButtonItem {
             let navigationController = segue.destination as! UINavigationController
@@ -76,13 +74,13 @@ class BucketListTableViewController: UITableViewController,AddItemTableViewContr
             let addItemTableController = navigationController.topViewController as! AddItemTableViewController
             addItemTableController.delegate = self
             
-            addItemTableController.item = newItems[indexPath.row]["objective"]! as? String
+            addItemTableController.item = tasks[indexPath.row]["objective"]! as? String
             
             addItemTableController.indexPath = indexPath
         }
     }
     
-  
+    
     
     func cancelButtonPressed(by controller: AddItemTableViewController) {
         
@@ -91,10 +89,9 @@ class BucketListTableViewController: UITableViewController,AddItemTableViewContr
     
     func itemSaved(by controller: AddItemTableViewController, with text: String, at indexPath:NSIndexPath?) {
         
-        
-        
         if let ip = indexPath {
-            let item = newItems[ip.row]
+            // task updated
+            let item = tasks[ip.row]
             item.setValue(text, forKey: "objective")
             let id = item.value(forKey: "id") as! Int
             TaskModel.updateTask(id: id, task: item) {_,_,_ in
@@ -102,10 +99,9 @@ class BucketListTableViewController: UITableViewController,AddItemTableViewContr
                     self.tableView.reloadData()
                 }
             }
-
+            
         } else {
-
-
+            // add new task
             TaskModel.addTaskWithObjective(objective: text) {_,_,_ in
                 DispatchQueue.main.async {
                     self.getTasks()
@@ -113,24 +109,18 @@ class BucketListTableViewController: UITableViewController,AddItemTableViewContr
                 }
             }
         }
-        
-        
-        
-        
         dismiss(animated: true, completion: nil)
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         
-
-        
-        let id = newItems[indexPath.row].value(forKey: "id")
+    
+        let id = tasks[indexPath.row].value(forKey: "id")
         
         TaskModel.deleteTask(id: id as! Int) {_,_,_ in
             
-            
             DispatchQueue.main.async { [self] in
-                newItems.remove(at: indexPath.row)
+                tasks.remove(at: indexPath.row)
                 tableView.reloadData()
                 
             }
