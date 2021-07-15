@@ -8,20 +8,29 @@
 import UIKit
 
 protocol ImageProducer {
-    func addImage(imageName:String?)
+    func produceImage(imageName:String?)
 }
 
-class SportListTableViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate,SportCellDelegate, ImageProducer {
+class SportListTableViewController: UITableViewController,SportCellDelegate {
 
     var sport = [Sport]()
     var indexPathForCell:NSIndexPath?
     
     var managedObjectContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-
     
-    func addImage(imageName: String?) {
-        sport[indexPathForCell!.row].image = imageName
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
+        do {
+            _ = try managedObjectContext.fetch(Sport.fetchRequest())
+        } catch {
+            print(error)
+        }
+        fetchSports()
+    }
+
+    func produceImage(imageName: String?) {
+        sport[indexPathForCell!.row].image = imageName
         tableView.reloadData()
     }
     func addImage(cell: SportTableViewCell) {
@@ -32,16 +41,6 @@ class SportListTableViewController: UITableViewController, UIImagePickerControll
         picker.delegate = self
         present(picker, animated: true)
     }
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        do {
-            _ = try managedObjectContext.fetch(Sport.fetchRequest())
-        } catch {
-            print("Error: \(error)")
-        }
-        fetchSports()
-    }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
@@ -51,7 +50,7 @@ class SportListTableViewController: UITableViewController, UIImagePickerControll
         
         cell.sportLabel!.text = "\(sportItem.title ?? "title")"
         
-
+        cell.accessoryType = .detailDisclosureButton
     
         if let image = sportItem.image {
             DispatchQueue.main.async {
@@ -65,6 +64,31 @@ class SportListTableViewController: UITableViewController, UIImagePickerControll
     }
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return sport.count
+    }
+    override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
+        
+        let alert = UIAlertController(title: "Edit Sport",
+                                      message: "Edit Sport",
+                                      preferredStyle: .alert)
+        
+        alert.addTextField(configurationHandler: nil)
+        
+        alert.textFields![0].text = self.sport[indexPath.row].title
+        
+        let saveAction = UIAlertAction(title: "Save", style: .default)
+        {
+            _ in
+            let textField = alert.textFields![0]
+            
+            
+            self.sport[indexPath.row].title = textField.text
+            self.saveSports()
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alert.addAction(saveAction)
+        alert.addAction(cancelAction)
+        present(alert, animated: true, completion: nil)
     }
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let thisSport = sport[indexPath.row]
@@ -105,6 +129,26 @@ class SportListTableViewController: UITableViewController, UIImagePickerControll
         present(alert, animated: true, completion: nil)
     }
     
+    func saveSports() {
+        do {
+            try managedObjectContext.save()
+        } catch {
+            print(error)
+        }
+        fetchSports()
+    }
+    func fetchSports() {
+        do {
+            sport = try managedObjectContext.fetch(Sport.fetchRequest())
+        } catch {
+            print(error)
+        }
+        tableView.reloadData()
+    }
+    
+}
+
+extension SportListTableViewController: ImageProducer, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         var delegate: ImageProducer?
@@ -119,7 +163,7 @@ class SportListTableViewController: UITableViewController, UIImagePickerControll
             try? jpegData.write(to: imagePath)
         }
     
-        delegate?.addImage(imageName: imageName)
+        delegate?.produceImage(imageName: imageName)
         
         dismiss(animated: true)
     }
@@ -128,23 +172,4 @@ class SportListTableViewController: UITableViewController, UIImagePickerControll
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         return paths[0]
     }
-    func saveSports() {
-        do {
-            try managedObjectContext.save()
-            print("Successfully saved")
-        } catch {
-            print("Error when saving: \(error)")
-        }
-        fetchSports()
-    }
-    func fetchSports() {
-        do {
-            sport = try managedObjectContext.fetch(Sport.fetchRequest())
-            print("Success")
-        } catch {
-            print("Error: \(error)")
-        }
-        tableView.reloadData()
-    }
-    
 }

@@ -16,39 +16,43 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="136" id="nFq-5k-VsH" customClass="SportTableViewCell" customModule="SportsApp" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="24.5" width="414" height="136"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="116" id="nFq-5k-VsH" customClass="SportTableViewCell" customModule="SportsApp" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="24.5" width="414" height="116"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="nFq-5k-VsH" id="ERh-D1-aJ9">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="136"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="116"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I2X-zU-0OX">
-                                            <rect key="frame" x="271" y="11" width="123" height="114"/>
+                                            <rect key="frame" x="20" y="11" width="114" height="94"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="114" id="XCO-Kr-fof"/>
-                                                <constraint firstAttribute="width" constant="123" id="fYX-Fl-ZZu"/>
+                                                <constraint firstAttribute="width" constant="114" id="1eH-a0-QSr"/>
+                                                <constraint firstAttribute="height" constant="94" id="fMb-LV-RVm"/>
                                             </constraints>
                                             <state key="normal" title="add image"/>
                                             <connections>
                                                 <action selector="imageButtonPressed:" destination="nFq-5k-VsH" eventType="touchUpInside" id="HxO-LC-9u6"/>
                                             </connections>
                                         </button>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zGP-Df-FLr">
-                                            <rect key="frame" x="20" y="53.5" width="202" height="29"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zGP-Df-FLr">
+                                            <rect key="frame" x="192" y="43.5" width="202" height="29"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="29" id="LBU-o3-SiF"/>
+                                                <constraint firstAttribute="width" constant="202" id="VbD-GV-jMo"/>
+                                            </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="zGP-Df-FLr" firstAttribute="leading" secondItem="ERh-D1-aJ9" secondAttribute="leadingMargin" id="Ow9-TZ-BiE"/>
-                                        <constraint firstItem="I2X-zU-0OX" firstAttribute="bottom" secondItem="ERh-D1-aJ9" secondAttribute="bottomMargin" id="QSP-3P-NqJ"/>
-                                        <constraint firstItem="zGP-Df-FLr" firstAttribute="centerY" secondItem="I2X-zU-0OX" secondAttribute="centerY" id="X9H-1J-8Yf"/>
-                                        <constraint firstItem="I2X-zU-0OX" firstAttribute="leading" secondItem="zGP-Df-FLr" secondAttribute="trailing" constant="49" id="b9I-0l-bwb"/>
-                                        <constraint firstItem="I2X-zU-0OX" firstAttribute="top" secondItem="ERh-D1-aJ9" secondAttribute="topMargin" id="l0i-No-cTx"/>
-                                        <constraint firstItem="zGP-Df-FLr" firstAttribute="top" secondItem="ERh-D1-aJ9" secondAttribute="topMargin" constant="42.5" id="v1C-98-giC"/>
-                                        <constraint firstItem="I2X-zU-0OX" firstAttribute="trailing" secondItem="ERh-D1-aJ9" secondAttribute="trailingMargin" id="wnm-D9-a25"/>
+                                        <constraint firstItem="zGP-Df-FLr" firstAttribute="leading" secondItem="I2X-zU-0OX" secondAttribute="trailing" constant="58" id="1lk-n5-TfZ"/>
+                                        <constraint firstItem="I2X-zU-0OX" firstAttribute="centerY" secondItem="zGP-Df-FLr" secondAttribute="centerY" id="Cj4-a8-W2d"/>
+                                        <constraint firstItem="I2X-zU-0OX" firstAttribute="top" secondItem="ERh-D1-aJ9" secondAttribute="topMargin" id="Mhx-c3-6q9"/>
+                                        <constraint firstItem="I2X-zU-0OX" firstAttribute="leading" secondItem="ERh-D1-aJ9" secondAttribute="leadingMargin" id="cww-zS-cdL"/>
+                                        <constraint firstItem="I2X-zU-0OX" firstAttribute="bottom" secondItem="ERh-D1-aJ9" secondAttribute="bottomMargin" id="f7F-ta-hPI"/>
+                                        <constraint firstItem="zGP-Df-FLr" firstAttribute="trailing" secondItem="ERh-D1-aJ9" secondAttribute="trailingMargin" id="pkm-d5-RO6"/>
+                                        <constraint firstItem="zGP-Df-FLr" firstAttribute="top" secondItem="ERh-D1-aJ9" secondAttribute="topMargin" constant="32.5" id="zhz-IF-WJO"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
